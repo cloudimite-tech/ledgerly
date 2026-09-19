@@ -5,13 +5,13 @@ import { ArrowDownLeft, ArrowUpRight, ShieldCheck } from "lucide-react";
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="grid min-h-dvh lg:grid-cols-[1.05fr_1fr]">
-      <aside className="relative hidden overflow-hidden bg-[#17130e] p-10 text-white lg:flex lg:flex-col">
+      <aside className="relative hidden overflow-hidden bg-[#0c1220] p-10 text-white lg:flex lg:flex-col">
         <Blob className="pointer-events-none absolute -left-40 -top-40 size-[560px] opacity-20 blur-[60px]" />
         <Blob className="pointer-events-none absolute -bottom-56 -right-40 size-[520px] rotate-45 opacity-[0.08] blur-[40px]" tone="income" />
         <Logo className="relative" />
         <div className="relative my-auto max-w-md">
           <h2 className="font-serif text-4xl font-medium leading-tight tracking-tight">
-            Know where every rupee <span className="text-[#e5a479]">comes and goes.</span>
+            Know where every rupee <span className="text-[#d4a94f]">comes and goes.</span>
           </h2>
           <p className="mt-4 text-white/55">Track income and expenses across accounts, set budgets, and see the full picture in seconds.</p>
 

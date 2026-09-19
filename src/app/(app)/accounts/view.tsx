@@ -31,7 +31,7 @@ export function AccountsView({ accounts, currency }: { accounts: Acc[]; currency
   return (
     <>
       <PageHeader title="Accounts" description="Wallets, bank accounts and cards you track money in.">
-        <Button onClick={() => setEditing({ name: "", type: "BANK", color: "#a8461f", openingBalance: "0" })}><Plus size={16} /> New account</Button>
+        <Button onClick={() => setEditing({ name: "", type: "BANK", color: "#97722a", openingBalance: "0" })}><Plus size={16} /> New account</Button>
       </PageHeader>
 
       <div className="relative mb-6 overflow-hidden rounded-3xl border border-border bg-surface p-6 shadow-card sm:p-8">

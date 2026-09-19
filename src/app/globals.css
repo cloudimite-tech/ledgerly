@@ -3,44 +3,47 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg: #f7f4ee;
+  /* Ink-navy is the app's identity color (text, borders, dark surfaces); a single
+     antique-brass accent carries every interactive/action moment. Deliberately not
+     the indigo/violet "AI SaaS" default, and not any shade of orange. */
+  --bg: #f6f4ee;
   --surface: #ffffff;
-  --surface-2: #efe9dc;
-  --border: #e0d8c8;
-  --text: #1c1712;
-  --muted: #766a58;
-  --primary: #a8461f;
-  --primary-fg: #fff7f0;
-  --primary-soft: #f3ded0;
+  --surface-2: #ece8dc;
+  --border: #ddd7c8;
+  --text: #16202f;
+  --muted: #6d7382;
+  --primary: #97722a;
+  --primary-fg: #fff8ea;
+  --primary-soft: #f1e8d2;
   --income: #1f7a52;
   --income-soft: #e5f1ea;
-  --expense: #a3372f;
-  --expense-soft: #f5e6e3;
-  --warn: #8f6112;
-  --ring: rgb(168 70 31 / 0.28);
-  --shadow: 0 1px 2px rgb(28 23 18 / 0.05);
-  --shadow-lg: 0 10px 28px -8px rgb(28 23 18 / 0.14);
+  --expense: #b3261e;
+  --expense-soft: #f7e6e4;
+  --warn: #8a6a1f;
+  --ring: rgb(151 114 42 / 0.28);
+  --shadow: 0 1px 2px rgb(22 32 47 / 0.06);
+  --shadow-lg: 0 10px 28px -8px rgb(22 32 47 / 0.16);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark {
-  --bg: #15120e;
-  --surface: #1d1912;
-  --surface-2: #262019;
-  --border: #362d21;
-  --text: #f1ebdf;
-  --muted: #a89a83;
-  --primary: #e08a52;
-  --primary-fg: #1c0f06;
-  --primary-soft: #3a2417;
+  --bg: #0c1220;
+  --surface: #121a2b;
+  --surface-2: #1a2338;
+  --border: #2b3650;
+  --text: #eef1f7;
+  --muted: #96a1b8;
+  --primary: #d4a94f;
+  --primary-fg: #1a1305;
+  --primary-soft: #3a3015;
   --income: #5ec090;
   --income-soft: #17301f;
-  --expense: #e08585;
+  --expense: #e2726a;
   --expense-soft: #3a1e1c;
-  --warn: #e0b169;
-  --ring: rgb(224 138 82 / 0.32);
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.35);
-  --shadow-lg: 0 14px 32px -8px rgb(0 0 0 / 0.5);
+  --warn: #d9a544;
+  --ring: rgb(212 169 79 / 0.32);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 14px 32px -8px rgb(0 0 0 / 0.55);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

@@ -22,7 +22,7 @@ export function CategoriesView({ categories, currency }: { categories: Row[]; cu
   return (
     <>
       <PageHeader title="Categories" description="Organise your income and spending the way you think about it.">
-        <Button onClick={() => setEditing({ name: "", type: "EXPENSE", color: "#6366f1", icon: "tag" })}><Plus size={16} /> New category</Button>
+        <Button onClick={() => setEditing({ name: "", type: "EXPENSE", color: "#64748b", icon: "tag" })}><Plus size={16} /> New category</Button>
       </PageHeader>
 
       <div className="space-y-8">

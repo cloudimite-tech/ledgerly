@@ -4,10 +4,10 @@ import { cn } from "./ui";
 // gradients, picked deterministically per person so the same name always gets
 // the same color across the app (sidebar, tables, group cards, member lists).
 const PALETTE = [
-  "bg-[#a8461f] text-[#fff7f0]",
-  "bg-[#5c6b4f] text-[#f4f6ef]",
+  "bg-[#1f3358] text-[#eef1f7]",
+  "bg-[#8a6a1f] text-[#fff8ea]",
   "bg-[#3a5a6b] text-[#eef5f8]",
-  "bg-[#7a5230] text-[#fbf3e9]",
+  "bg-[#5c6b4f] text-[#f4f6ef]",
   "bg-[#6b4a6f] text-[#f8f0f9]",
   "bg-[#4f6b63] text-[#eef6f3]",
 ];
