@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ledgerly
+      POSTGRES_PASSWORD: ledgerly
+      POSTGRES_DB: ledgerly
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledgerly"]
+      interval: 5s
+      retries: 10
+
+  migrate:
+    build: { context: ., target: migrate }
+    profiles: ["app"]
+    environment:
+      DATABASE_URL: postgresql://ledgerly:ledgerly@db:5432/ledgerly?schema=public
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@ledgerly.local}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin@12345}
+    depends_on:
+      db: { condition: service_healthy }
+
+  app:
+    build: { context: ., target: runner }
+    profiles: ["app"]
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://ledgerly:ledgerly@db:5432/ledgerly?schema=public
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET in .env}
+      ALLOW_SIGNUP: ${ALLOW_SIGNUP:-true}
+      # Set to "true" only if serving over plain HTTP (no TLS) for testing
+      INSECURE_COOKIES: ${INSECURE_COOKIES:-false}
+    ports:
+      - "3000:3000"
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+volumes:
+  pgdata:

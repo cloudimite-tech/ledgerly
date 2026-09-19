@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum TxType {
+  INCOME
+  EXPENSE
+}
+
+enum AccountType {
+  CASH
+  BANK
+  CARD
+  SAVINGS
+  OTHER
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         Role          @default(USER)
+  status       UserStatus    @default(ACTIVE)
+  currency     String        @default("LKR")
+  lastLoginAt  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  accounts     Account[]
+  categories   Category[]
+  transactions Transaction[]
+  budgets      Budget[]
+  auditLogs    AuditLog[]    @relation("actor")
+  groupMemberships GroupMember[]
+  groupsCreated    Group[]       @relation("groupCreator")
+}
+
+model Group {
+  id          String        @id @default(cuid())
+  name        String        @unique
+  description String?
+  createdById String?
+  createdBy   User?         @relation("groupCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  members     GroupMember[]
+}
+
+model GroupMember {
+  id      String   @id @default(cuid())
+  groupId String
+  group   Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  userId  String
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  addedAt DateTime @default(now())
+
+  @@unique([groupId, userId])
+  @@index([userId])
+}
+
+model Account {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name           String
+  type           AccountType   @default(BANK)
+  openingBalance Decimal       @default(0) @db.Decimal(14, 2)
+  color          String        @default("#6366f1")
+  archived       Boolean       @default(false)
+  createdAt      DateTime      @default(now())
+  transactions   Transaction[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model Category {
+  id           String        @id @default(cuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  type         TxType
+  color        String        @default("#6366f1")
+  icon         String        @default("tag")
+  createdAt    DateTime      @default(now())
+  transactions Transaction[]
+  budgets      Budget[]
+
+  @@unique([userId, name, type])
+  @@index([userId])
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId   String
+  account     Account  @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  type        TxType
+  amount      Decimal  @db.Decimal(14, 2)
+  date        DateTime @db.Date
+  description String
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId, date])
+  @@index([userId, categoryId])
+}
+
+model Budget {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  amount     Decimal  @db.Decimal(14, 2)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, categoryId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation("actor", fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  target    String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
